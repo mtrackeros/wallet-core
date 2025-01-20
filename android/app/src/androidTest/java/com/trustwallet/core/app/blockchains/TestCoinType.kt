@@ -32,7 +32,7 @@ class TestCoinType {
         assertEquals(CoinType.POANETWORK.value(), 178)
         assertEquals(CoinType.VECHAIN.value(), 818)
         assertEquals(CoinType.ICON.value(), 74)
-        assertEquals(CoinType.TOMOCHAIN.value(), 889)
+        assertEquals(CoinType.VICTION.value(), 889)
         assertEquals(CoinType.TEZOS.value(), 1729)
         assertEquals(CoinType.QTUM.value(), 2301)
         assertEquals(CoinType.NEBULAS.value(), 2718)
@@ -54,6 +54,8 @@ class TestCoinType {
         assertEquals(res, "m/84'/0'/0'/0/0")
         res = CoinType.createFromValue(CoinType.BITCOIN.value()).derivationPathWithDerivation(Derivation.BITCOINLEGACY).toString()
         assertEquals(res, "m/44'/0'/0'/0/0")
+        res = CoinType.createFromValue(CoinType.BITCOIN.value()).derivationPathWithDerivation(Derivation.BITCOINTAPROOT).toString()
+        assertEquals(res, "m/86'/0'/0'/0/0")
         res = CoinType.createFromValue(CoinType.SOLANA.value()).derivationPathWithDerivation(Derivation.SOLANASOLANA).toString()
         assertEquals(res, "m/44'/501'/0'/0'")
     }

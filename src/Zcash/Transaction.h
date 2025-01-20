@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #pragma once
 
@@ -19,6 +17,7 @@ namespace TW::Zcash {
 
 extern const std::array<byte, 4> SaplingBranchID;
 extern const std::array<byte, 4> BlossomBranchID;
+extern const std::array<byte, 4> Nu6BranchID;
 
 /// Only supports transparent transaction right now
 /// See also https://github.com/zcash/zips/blob/master/zip-0243.rst

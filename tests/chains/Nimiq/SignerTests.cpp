@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include "HexCoding.h"
 #include "PrivateKey.h"
@@ -32,7 +30,8 @@ TEST(NimiqSigner, Sign) {
         Address("NQ86 2H8F YGU5 RM77 QSN9 LYLH C56A CYYR 0MLA"),
         42042042,
         1000,
-        314159
+        314159,
+        Proto::NetworkId::Mainnet
     );
 
     Signer signer;

@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include "Coin.h"
 
@@ -64,6 +62,12 @@
 #include "Hedera/Entry.h"
 #include "TheOpenNetwork/Entry.h"
 #include "Sui/Entry.h"
+#include "Greenfield/Entry.h"
+#include "InternetComputer/Entry.h"
+#include "NativeEvmos/Entry.h"
+#include "NativeInjective/Entry.h"
+#include "BitcoinCash/Entry.h"
+#include "Pactus/Entry.h"
 // end_of_coin_includes_marker_do_not_modify
 
 using namespace TW;
@@ -119,6 +123,12 @@ Everscale::Entry EverscaleDP;
 Hedera::Entry HederaDP;
 TheOpenNetwork::Entry tonDP;
 Sui::Entry SuiDP;
+Greenfield::Entry GreenfieldDP;
+InternetComputer::Entry InternetComputerDP;
+NativeEvmos::Entry NativeEvmosDP;
+NativeInjective::Entry NativeInjectiveDP;
+BitcoinCash::Entry BitcoinCashDP;
+Pactus::Entry PactusDP;
 // end_of_coin_dipatcher_declarations_marker_do_not_modify
 
 CoinEntry* coinDispatcher(TWCoinType coinType) {
@@ -176,6 +186,12 @@ CoinEntry* coinDispatcher(TWCoinType coinType) {
         case TWBlockchainHedera: entry = &HederaDP; break;
         case TWBlockchainTheOpenNetwork: entry = &tonDP; break;
         case TWBlockchainSui: entry = &SuiDP; break;
+        case TWBlockchainGreenfield: entry = &GreenfieldDP; break;
+        case TWBlockchainInternetComputer: entry = &InternetComputerDP; break;
+        case TWBlockchainNativeEvmos: entry = &NativeEvmosDP; break;
+        case TWBlockchainNativeInjective: entry = &NativeInjectiveDP; break;
+        case TWBlockchainBitcoinCash: entry = &BitcoinCashDP; break;
+        case TWBlockchainPactus: entry = &PactusDP; break;
         // end_of_coin_dipatcher_switch_marker_do_not_modify
 
         default: entry = nullptr; break;
@@ -200,7 +216,11 @@ bool TW::validateAddress(TWCoinType coin, const string& address, const PrefixVar
     // dispatch
     auto* dispatcher = coinDispatcher(coin);
     assert(dispatcher != nullptr);
-    return dispatcher->validateAddress(coin, address, prefix);
+    try {
+        return dispatcher->validateAddress(coin, address, prefix);
+    } catch (...) {
+        return false;
+    }
 }
 
 bool TW::validateAddress(TWCoinType coin, const std::string& string) {
@@ -211,20 +231,25 @@ bool TW::validateAddress(TWCoinType coin, const std::string& string) {
     // dispatch
     auto* dispatcher = coinDispatcher(coin);
     assert(dispatcher != nullptr);
-    bool isValid = false;
-    // First check HRP.
-    if (hrp != nullptr && !std::string(hrp).empty()) {
-        isValid = dispatcher->validateAddress(coin, string, Bech32Prefix(hrp));
+
+    try {
+        bool isValid = false;
+        // First check HRP.
+        if (hrp != nullptr && !std::string(hrp).empty()) {
+            isValid = dispatcher->validateAddress(coin, string, Bech32Prefix(hrp));
+        }
+        // Then check UTXO
+        if ((p2pkh != 0 || p2sh != 0) && !isValid) {
+            return isValid || dispatcher->validateAddress(coin, string, Base58Prefix{.p2pkh = p2pkh, .p2sh = p2sh});
+        }
+        // Then check normal
+        if (!isValid) {
+            isValid = dispatcher->validateAddress(coin, string, std::monostate());
+        }
+        return isValid;
+    } catch (...) {
+        return false;
     }
-    // Then check UTXO
-    if ((p2pkh != 0 || p2sh != 0) && !isValid) {
-        return isValid || dispatcher->validateAddress(coin, string, Base58Prefix{.p2pkh = p2pkh, .p2sh = p2sh});
-    }
-    // Then check normal
-    if (!isValid) {
-        isValid = dispatcher->validateAddress(coin, string, std::monostate());
-    }
-    return isValid;
 }
 
 namespace TW::internal {
@@ -234,7 +259,7 @@ namespace TW::internal {
         assert(dispatcher != nullptr);
         return dispatcher->normalizeAddress(coin, address);
     }
-}
+} // namespace TW::internal
 
 std::string TW::normalizeAddress(TWCoinType coin, const string& address) {;
     if (!TW::validateAddress(coin, address)) {
@@ -309,12 +334,6 @@ void TW::anyCoinCompileWithSignatures(TWCoinType coinType, const Data& txInputDa
     auto* dispatcher = coinDispatcher(coinType);
     assert(dispatcher != nullptr);
     dispatcher->compile(coinType, txInputData, signatures, publicKeys, txOutputOut);
-}
-
-Data TW::anyCoinBuildTransactionInput(TWCoinType coinType, const std::string& from, const std::string& to, const uint256_t& amount, const std::string& asset, const std::string& memo, const std::string& chainId) {
-    auto* dispatcher = coinDispatcher(coinType);
-    assert(dispatcher != nullptr);
-    return dispatcher->buildTransactionInput(coinType, from, to, amount, asset, memo, chainId);
 }
 
 // Coin info accessors

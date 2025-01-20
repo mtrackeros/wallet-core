@@ -1,8 +1,6 @@
-// Copyright © 2017-2022 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 import WalletCore
 import XCTest
@@ -42,6 +40,9 @@ class AnyAddressTests: XCTestCase {
 
         let address2 = AnyAddress(publicKey: pubkey, coin: coin, derivation: .bitcoinLegacy)
         XCTAssertEqual(address2.description, "1JvRfEQFv5q5qy9uTSAezH7kVQf4hqnHXx")
+        
+        let address3 = AnyAddress(publicKey: pubkey, coin: coin, derivation: .bitcoinTaproot)
+        XCTAssertEqual(address3.description, "bc1pnncpg8s7gu7t6xmmzxqarcj8ydthmaz8gr4m76eephjfprs53maswgel0w")
     }
 
     func testCreateBech32WithPublicKey() {

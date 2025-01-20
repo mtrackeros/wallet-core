@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #pragma once
 
@@ -71,5 +69,15 @@ template <typename T>
 inline bool has_prefix(const Data& data, T& prefix) {
     return std::equal(prefix.begin(), prefix.end(), data.begin(), data.begin() + std::min(data.size(), prefix.size()));
 }
+
+// Custom hash function for `Data` type.
+struct DataHash {
+    std::size_t operator()(const Data& data) const {
+        // Create a string_view from the vector's data.
+        std::string_view ss(reinterpret_cast<const char*>(data.data()), data.size());
+        // Use the hash function for std::string_view
+        return std::hash<std::string_view>{}(ss);
+    }
+};
 
 } // namespace TW

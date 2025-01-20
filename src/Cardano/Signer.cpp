@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include "Signer.h"
 #include "AddressV3.h"
@@ -345,7 +343,7 @@ std::vector<TxInput> Signer::selectInputsWithTokens(const std::vector<TxInput>& 
 
 // Create a simple plan, used for estimation
 TransactionPlan simplePlan(Amount amount, const TokenBundle& requestedTokens, const std::vector<TxInput>& selectedInputs, bool maxAmount, uint64_t deposit, uint64_t undeposit, const std::vector<TxOutput>& extraOutputs) {
-    TransactionPlan plan{.utxos = selectedInputs, .extraOutputs = extraOutputs, .amount = amount, .deposit = deposit, .undeposit = undeposit};
+    TransactionPlan plan{.utxos = selectedInputs, .extraOutputs = extraOutputs, .amount = amount, .deposit = deposit, .undeposit = undeposit, .availableTokens{}, .outputTokens{}, .changeTokens{}};
     // Sum availableAmount
     plan.availableAmount = 0;
     for (auto& u : plan.utxos) {

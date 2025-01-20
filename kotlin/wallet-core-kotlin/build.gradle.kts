@@ -1,4 +1,4 @@
-@file:Suppress("UnstableApiUsage")
+@file:Suppress("UnstableApiUsage", "OPT_IN_USAGE")
 
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackOutput
 
@@ -10,9 +10,20 @@ plugins {
 }
 
 kotlin {
-    android {
+    targetHierarchy.default()
+
+    androidTarget {
         publishLibraryVariants = listOf("release")
     }
+
+    jvm {
+        testRuns.named("test") {
+            executionTask.configure {
+                useJUnitPlatform()
+            }
+        }
+    }
+    jvmToolchain(17)
 
     val nativeTargets =
         listOf(
@@ -37,9 +48,6 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
-            kotlin.srcDir(projectDir.resolve("src/androidMain/generated"))
-        }
         val commonMain by getting {
             kotlin.srcDirs(
                 projectDir.resolve("src/commonMain/generated"),
@@ -50,19 +58,40 @@ kotlin {
                 api(libs.wire.runtime)
             }
         }
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosX64Main by getting
-        val iosMain by creating {
-            kotlin.srcDir(projectDir.resolve("src/iosMain/generated"))
+
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+
+        val androidMain by getting
+        val jvmMain by getting
+        create("commonAndroidJvmMain") {
+            kotlin.srcDir(projectDir.resolve("src/commonAndroidJvmMain/generated"))
 
             dependsOn(commonMain)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            iosX64Main.dependsOn(this)
+            androidMain.dependsOn(this)
+            jvmMain.dependsOn(this)
         }
-        val jsMain by getting {
+
+        getByName("iosMain") {
+            kotlin.srcDir(projectDir.resolve("src/iosMain/generated"))
+        }
+
+        getByName("jsMain") {
             kotlin.srcDir(projectDir.resolve("src/jsMain/generated"))
+
+            dependencies {
+                implementation(npm(name = "webpack", version = "5.89.0"))
+            }
+        }
+
+        getByName("androidInstrumentedTest") {
+            dependsOn(commonTest)
+            dependencies {
+                implementation(libs.androidx.test.runner)
+            }
         }
     }
 
@@ -74,6 +103,10 @@ kotlin {
                 headers(rootDir.parentFile.resolve("include/TrustWalletCore").listFiles()!!)
             }
         }
+    }
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 }
 
@@ -98,6 +131,8 @@ android {
                 arguments += listOf("-DCMAKE_BUILD_TYPE=Release", "-DKOTLIN=True", "-DTW_UNITY_BUILD=ON")
             }
         }
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
@@ -109,12 +144,6 @@ android {
         resValues = false
         shaders = false
         viewBinding = false
-    }
-
-    androidComponents {
-        beforeVariants {
-            it.enable = it.name == "release"
-        }
     }
 
     externalNativeBuild {

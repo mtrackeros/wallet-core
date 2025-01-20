@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 package com.trustwallet.core
 
@@ -10,9 +8,11 @@ import kotlinx.cinterop.COpaquePointer
 import kotlinx.cinterop.readBytes
 import kotlinx.cinterop.toCValues
 
+// Build ByteArray from TWData, and then delete TWData
+@OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
 internal fun COpaquePointer?.readTwBytes(): ByteArray? =
-    TWDataBytes(this)?.readBytes(TWDataSize(this).toInt())
-
-@OptIn(ExperimentalUnsignedTypes::class)
-internal fun ByteArray?.toTwData(): COpaquePointer? =
-    TWDataCreateWithBytes(this?.toUByteArray()?.toCValues(), this?.size?.toULong() ?: 0u)
+    this?.let {
+        val result = TWDataBytes(it)?.readBytes(TWDataSize(it).toInt())
+        TWDataDelete(it)
+        result
+    }

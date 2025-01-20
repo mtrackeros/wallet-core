@@ -1,9 +1,7 @@
 // Copyright © 2017 Pieter Wuille
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include "Bech32.h"
 #include "Data.h"
@@ -105,7 +103,7 @@ Data create_checksum(const std::string& hrp, const Data& values, ChecksumVariant
 
 } // namespace
 
-/** Encode a Bech32 string. */
+/** Encode a Bech32 string. Note that the values must each encode 5 bits, normally get from convertBits<8, 5, true> */
 std::string encode(const std::string& hrp, const Data& values, ChecksumVariant variant) {
     Data checksum = create_checksum(hrp, values, variant);
     Data combined = values;
@@ -118,7 +116,7 @@ std::string encode(const std::string& hrp, const Data& values, ChecksumVariant v
     return ret;
 }
 
-/** Decode a Bech32 string. */
+/** Decode a Bech32 string. Note that the returned values are 5 bits each, you may want to use convertBits<5, 8, false> */
 std::tuple<std::string, Data, ChecksumVariant> decode(const std::string& str) {
     if (str.length() > 120 || str.length() < 2) {
         // too long or too short

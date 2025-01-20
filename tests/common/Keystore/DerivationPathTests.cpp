@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include "Coin.h"
 #include "DerivationPath.h"
@@ -84,6 +82,8 @@ TEST(Derivation, alternativeDerivation) {
     EXPECT_EQ(std::string(TW::derivationName(TWCoinTypeBitcoin, TWDerivationBitcoinSegwit)), "segwit");
     EXPECT_EQ(TW::derivationPath(TWCoinTypeBitcoin, TWDerivationBitcoinLegacy).string(), "m/44'/0'/0'/0/0");
     EXPECT_EQ(std::string(TW::derivationName(TWCoinTypeBitcoin, TWDerivationBitcoinLegacy)), "legacy");
+    EXPECT_EQ(TW::derivationPath(TWCoinTypeBitcoin, TWDerivationBitcoinTaproot).string(), "m/86'/0'/0'/0/0");
+    EXPECT_EQ(std::string(TW::derivationName(TWCoinTypeBitcoin, TWDerivationBitcoinTaproot)), "taproot");
 
     EXPECT_EQ(TW::derivationPath(TWCoinTypeLitecoin, TWDerivationDefault).string(), "m/84'/2'/0'/0/0");
     EXPECT_EQ(TW::derivationPath(TWCoinTypeLitecoin, TWDerivationLitecoinLegacy).string(), "m/44'/2'/0'/0/0");

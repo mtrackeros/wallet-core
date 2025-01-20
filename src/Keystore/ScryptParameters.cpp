@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include "ScryptParameters.h"
 
@@ -13,13 +11,30 @@ using namespace TW;
 
 namespace TW::Keystore {
 
-ScryptParameters ScryptParameters::Minimal = ScryptParameters(Data(), minimalN, defaultR, minimalP, defaultDesiredKeyLength);
-ScryptParameters ScryptParameters::Weak = ScryptParameters(Data(), weakN, defaultR, weakP, defaultDesiredKeyLength);
-ScryptParameters ScryptParameters::Standard = ScryptParameters(Data(), standardN, defaultR, standardP, defaultDesiredKeyLength);
+namespace internal {
+
+Data randomSalt() {
+    Data salt(32);
+    random_buffer(salt.data(), salt.size());
+    return salt;
+}
+
+} // namespace internal
+
+ScryptParameters ScryptParameters::minimal() {
+    return { internal::randomSalt(), minimalN, defaultR, minimalP, defaultDesiredKeyLength };
+}
+
+ScryptParameters ScryptParameters::weak() {
+    return { internal::randomSalt(), weakN, defaultR, weakP, defaultDesiredKeyLength };
+}
+
+ScryptParameters ScryptParameters::standard() {
+    return { internal::randomSalt(), standardN, defaultR, standardP, defaultDesiredKeyLength };
+}
 
 ScryptParameters::ScryptParameters()
-    : salt(32) {
-    random_buffer(salt.data(), salt.size());
+    : salt(internal::randomSalt()) {
 }
 
 #pragma GCC diagnostic ignored "-Wtautological-constant-out-of-range-compare"

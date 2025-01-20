@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #pragma once
 
@@ -72,7 +70,7 @@ enum TWCoinType {
     TWCoinTypeTheta = 500,
     TWCoinTypeThunderCore = 1001,
     TWCoinTypeNEO = 888,
-    TWCoinTypeTomoChain = 889,
+    TWCoinTypeViction = 889,
     TWCoinTypeTron = 195,
     TWCoinTypeVeChain = 818,
     TWCoinTypeViacoin = 14,
@@ -120,14 +118,14 @@ enum TWCoinType {
     TWCoinTypeSyscoin = 57,
     TWCoinTypeVerge = 77,
     TWCoinTypeZen = 121,
-    TWCoinTypeMetis = 1001088,
+    TWCoinTypeMetis = 10001088,
     TWCoinTypeAurora = 1323161554,
     TWCoinTypeEvmos = 10009001,
     TWCoinTypeNativeEvmos = 20009001,
     TWCoinTypeMoonriver = 10001285,
     TWCoinTypeMoonbeam = 10001284,
     TWCoinTypeKavaEvm = 10002222,
-    TWCoinTypeKlaytn = 10008217,
+    TWCoinTypeKaia = 10008217,
     TWCoinTypeMeter = 18000,
     TWCoinTypeOKXChain = 996,
     TWCoinTypeStratis = 105105,
@@ -162,7 +160,7 @@ enum TWCoinType {
     TWCoinTypePersistence = 16000118,
     TWCoinTypeAkash = 17000118,
     TWCoinTypeNoble = 18000118,
-    TWCoinTypeScroll = 534353,
+    TWCoinTypeScroll = 534352,
     TWCoinTypeRootstock = 137,
     TWCoinTypeThetaFuel = 361,
     TWCoinTypeConfluxeSpace = 1030,
@@ -174,6 +172,22 @@ enum TWCoinType {
     TWCoinTypeSei = 19000118,
     TWCoinTypeArbitrumNova = 10042170,
     TWCoinTypeLinea = 59144,
+    TWCoinTypeGreenfield = 5600,
+    TWCoinTypeMantle = 5000,
+    TWCoinTypeZenEON = 7332,
+    TWCoinTypeInternetComputer = 223,
+    TWCoinTypeTia = 21000118,
+    TWCoinTypeMantaPacific = 169,
+    TWCoinTypeNativeZetaChain = 10007000,
+    TWCoinTypeZetaEVM = 20007000,
+    TWCoinTypeDydx = 22000118,
+    TWCoinTypeMerlin = 4200,
+    TWCoinTypeLightlink = 1890,
+    TWCoinTypeBlast = 81457,
+    TWCoinTypeBounceBit = 6001,
+    TWCoinTypeZkLinkNova = 810180,
+    TWCoinTypePactus = 21888,
+    // end_of_tw_coin_type_marker_do_not_modify
 };
 
 /// Returns the blockchain for a coin type.

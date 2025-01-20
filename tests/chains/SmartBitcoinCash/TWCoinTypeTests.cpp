@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 //
 // This is a GENERATED FILE, changes made here MAY BE LOST.
 // Generated one-time (codegen/bin/cointests)
@@ -27,8 +25,8 @@ TEST(TWSmartBitcoinCashCoinType, TWCoinType) {
     ASSERT_EQ(0x0, TWCoinTypeP2shPrefix(TWCoinTypeSmartBitcoinCash));
     ASSERT_EQ(0x0, TWCoinTypeStaticPrefix(TWCoinTypeSmartBitcoinCash));
     assertStringsEqual(symbol, "BCH");
-    assertStringsEqual(txUrl, "https://www.smartscan.cash/tx/0x6413466b455b17d03c7a8ce2d7f99fec34bcd338628bdd2d0580a21e3197a4d9");
-    assertStringsEqual(accUrl, "https://www.smartscan.cash/address/0xFeEc227410E1DF9f3b4e6e2E284DC83051ae468F");
+    assertStringsEqual(txUrl, "https://www.smartscout.cash/tx/0x6413466b455b17d03c7a8ce2d7f99fec34bcd338628bdd2d0580a21e3197a4d9");
+    assertStringsEqual(accUrl, "https://www.smartscout.cash/address/0xFeEc227410E1DF9f3b4e6e2E284DC83051ae468F");
     assertStringsEqual(id, "smartbch");
     assertStringsEqual(name, "Smart Bitcoin Cash");
 }

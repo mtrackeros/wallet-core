@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #pragma once
 
@@ -90,7 +88,20 @@ public:
     }
 };
 
+class Zip0317FeeCalculator: public FeeCalculator {
+public:
+    static constexpr int64_t gMarginalFee = 5000ul;
+    static constexpr int64_t gGraceActions = 2ul;
+
+    Zip0317FeeCalculator() noexcept = default;
+
+    [[nodiscard]] int64_t calculate(int64_t inputs, int64_t outputs, int64_t byteFee) const noexcept final;
+    [[nodiscard]] int64_t calculateSingleInput([[maybe_unused]] int64_t byteFee) const noexcept final {
+        return gMarginalFee;
+    }
+};
+
 /// Return the fee calculator for the given coin.
-const FeeCalculator& getFeeCalculator(TWCoinType coinType, bool disableFilter = false) noexcept;
+const FeeCalculator& getFeeCalculator(TWCoinType coinType, bool disableFilter = false, bool zip0317 = false) noexcept;
 
 } // namespace TW::Bitcoin

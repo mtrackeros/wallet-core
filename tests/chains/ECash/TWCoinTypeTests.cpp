@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 //
 // This is a GENERATED FILE, changes made here MAY BE LOST.
 // Generated one-time (codegen/bin/cointests)
@@ -23,7 +21,7 @@ TEST(TWECashCoinType, TWCoinType) {
     auto name = WRAPS(TWCoinTypeConfigurationGetName(TWCoinTypeECash));
 
     ASSERT_EQ(TWCoinTypeConfigurationGetDecimals(TWCoinTypeECash), 2);
-    ASSERT_EQ(TWBlockchainBitcoin, TWCoinTypeBlockchain(TWCoinTypeECash));
+    ASSERT_EQ(TWBlockchainBitcoinCash, TWCoinTypeBlockchain(TWCoinTypeECash));
     ASSERT_EQ(0x5, TWCoinTypeP2shPrefix(TWCoinTypeECash));
     ASSERT_EQ(0x0, TWCoinTypeStaticPrefix(TWCoinTypeECash));
     assertStringsEqual(symbol, "XEC");

@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #pragma once
 
@@ -33,14 +31,14 @@ TWString *_Nonnull TWBase58EncodeNoCheck(TWData *_Nonnull data);
 /// Decodes a Base58 string, checking the checksum. Returns null if the string is not a valid Base58 string.
 ///
 /// \param string The Base58 string to decode.
-/// \return the decoded data, empty if the string is not a valid Base58 string with checksum.
+/// \return the decoded data, null if the string is not a valid Base58 string with checksum.
 TW_EXPORT_STATIC_METHOD
 TWData *_Nullable TWBase58Decode(TWString *_Nonnull string);
 
 /// Decodes a Base58 string, w/o checking the checksum. Returns null if the string is not a valid Base58 string.
 ///
 /// \param string The Base58 string to decode.
-/// \return the decoded data, empty if the string is not a valid Base58 string without checksum.
+/// \return the decoded data, null if the string is not a valid Base58 string without checksum.
 TW_EXPORT_STATIC_METHOD
 TWData *_Nullable TWBase58DecodeNoCheck(TWString *_Nonnull string);
 

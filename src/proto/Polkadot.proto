@@ -45,7 +45,7 @@ message Balance {
         // destination address
         string to_address = 1;
 
-        // amount (uint256, serialized little endian)
+        // amount (uint256, serialized big endian)
         bytes value = 2;
 
         // max 32 chars
@@ -105,7 +105,7 @@ message Staking {
         // controller ID (optional)
         string controller = 1;
 
-        // amount (uint256, serialized little endian)
+        // amount (uint256, serialized big endian)
         bytes value = 2;
 
         // destination for rewards
@@ -120,7 +120,7 @@ message Staking {
         // controller ID (optional)
         string controller = 1;
 
-        // amount (uint256, serialized little endian)
+        // amount (uint256, serialized big endian)
         bytes value = 2;
 
         // destination for rewards
@@ -131,11 +131,17 @@ message Staking {
 
         // call indices
         CallIndices call_indices = 5;
+
+        // Staking.Bond call indices
+        CallIndices bond_call_indices = 6;
+
+        // Staking.Nominate call indices
+        CallIndices nominate_call_indices = 7;
     }
 
     // Bond extra amount
     message BondExtra {
-        // amount (uint256, serialized little endian)
+        // amount (uint256, serialized big endian)
         bytes value = 1;
 
         // call indices
@@ -144,7 +150,7 @@ message Staking {
 
     // Unbond
     message Unbond {
-        // amount (uint256, serialized little endian)
+        // amount (uint256, serialized big endian)
         bytes value = 1;
 
         // call indices
@@ -153,7 +159,7 @@ message Staking {
 
     // Rebond
     message Rebond {
-        // amount (uint256, serialized little endian)
+        // amount (uint256, serialized big endian)
         bytes value = 1;
 
         // call indices
@@ -179,11 +185,17 @@ message Staking {
 
     // Chill and unbound
     message ChillAndUnbond {
-        // amount (uint256, serialized little endian)
+        // amount (uint256, serialized big endian)
         bytes value = 1;
 
         // call indices
         CallIndices call_indices = 2;
+
+        // Staking.Chill call indices
+        CallIndices chill_call_indices = 3;
+
+        // Staking.Unbond call indices
+        CallIndices unbond_call_indices = 4;
     }
 
     // Chill

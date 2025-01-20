@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include "Serialization.h"
 #include "../HexCoding.h"
@@ -293,6 +291,9 @@ json raw_dataJSON(const protocol::Transaction::raw& raw) {
     }
     raw_dataJSON["timestamp"] = raw.timestamp();
     raw_dataJSON["expiration"] = raw.expiration();
+    if (!raw.data().empty()) {
+        raw_dataJSON["data"] = hex(raw.data());
+    }
     raw_dataJSON["contract"] = json::array({contractJSON(raw.contract(0))});
 
     return raw_dataJSON;

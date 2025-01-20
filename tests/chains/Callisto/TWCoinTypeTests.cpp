@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 //
 // This is a GENERATED FILE, changes made here MAY BE LOST.
 // Generated one-time (codegen/bin/cointests)
@@ -27,8 +25,8 @@ TEST(TWCallistoCoinType, TWCoinType) {
     ASSERT_EQ(0x0, TWCoinTypeP2shPrefix(TWCoinTypeCallisto));
     ASSERT_EQ(0x0, TWCoinTypeStaticPrefix(TWCoinTypeCallisto));
     assertStringsEqual(symbol, "CLO");
-    assertStringsEqual(txUrl, "https://explorer.callisto.network/tx/t123");
-    assertStringsEqual(accUrl, "https://explorer.callisto.network/addr/a12");
+    assertStringsEqual(txUrl, "https://explorer.callistodao.org/tx/t123");
+    assertStringsEqual(accUrl, "https://explorer.callistodao.org/address/a12");
     assertStringsEqual(id, "callisto");
     assertStringsEqual(name, "Callisto");
 }

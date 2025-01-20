@@ -1,8 +1,6 @@
-// Copyright © 2017-2023 Trust Wallet.
+// SPDX-License-Identifier: Apache-2.0
 //
-// This file is part of Trust. The full Trust copyright notice, including
-// terms governing use, modification, and redistribution, is contained in the
-// file LICENSE at the root of the source code distribution tree.
+// Copyright © 2017 Trust Wallet.
 
 #include <TrustWalletCore/TWHash.h>
 #include "../Hash.h"
@@ -88,7 +86,7 @@ TWData *_Nonnull TWHashBlake2bPersonal(TWData *_Nonnull data, TWData * _Nonnull 
     auto dataBytes = TWDataBytes(data);
     auto personalBytes = TWDataBytes(personal);
     auto personalSize = TWDataSize(personal);
-    blake2b_Personal(dataBytes, static_cast<uint32_t>(TWDataSize(data)), personalBytes, personalSize, resultBytes.data(), outlen);
+    tc_blake2b_Personal(dataBytes, static_cast<uint32_t>(TWDataSize(data)), personalBytes, personalSize, resultBytes.data(), outlen);
     auto result = TWDataCreateWithBytes(resultBytes.data(), outlen);
     return result;
 }
